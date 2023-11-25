@@ -5,8 +5,10 @@ import { AuthContext } from '../Provider/Provider';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const Login = () => {
+    const axiosPublic=useAxiosPublic()
     const captcharef = useRef(null)
     const [desabol, setdesabol] = useState(true)
     const location = useLocation()
@@ -52,8 +54,16 @@ const Login = () => {
     const googlesubmit = () => {
         googlesignup()
             .then(res => {
-                console.log(res)
-                navigate(from, { replace: true })
+                const userInfo={
+                    email: res.user?.email,
+                    name:res.user?.displayName
+                }
+                axiosPublic.post('/user',userInfo)
+                .then(res=>{
+                    console.log(res)
+                    navigate(from, { replace: true })
+                })
+                
             })
             .catch(console.error())
     };

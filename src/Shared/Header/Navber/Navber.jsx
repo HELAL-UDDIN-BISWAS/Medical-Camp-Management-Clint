@@ -12,6 +12,8 @@ const Navber = () => {
     const nav = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/availablecamps'>Available Camps</Link></li>
+        <li><Link to='/dashboard/registered-camps'>Dashboard</Link></li>
+
         <li><Link to='/contactUs'>Contact Us</Link></li>
 
     </>

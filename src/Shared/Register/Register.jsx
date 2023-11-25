@@ -5,36 +5,46 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const Register = () => {
     const { createuser, ubdateUser, googlesignup } = useContext(AuthContext)
-    const { register, handleSubmit,formState: { errors }  } = useForm()
-
+    const { register, handleSubmit, formState: { errors } } = useForm()
+   const asiosPublic = useAxiosPublic()
     const onesubmit = async (data) => {
         const imageFile = new FormData();
         imageFile.append('image', data.photo[0]);
         createuser(data.email, data.password)
             .then(async (res) => {
                 const { data: imagedata } = await axios.post('https://api.imgbb.com/1/upload?key=b425eed4264500ee966fabfc8c973be7', imageFile);
-                console.log(imagedata);
                 ubdateUser(data.name, imagedata.data.display_url)
-                Swal.fire({
-                    icon: "success",
-                    title: "Success Register",
-                    text: "Thanks For Register",
-                    footer: '<a href="#">Why do I have this issue?</a>'
-                  });
+                const userInfo={
+                    name: data.name,
+                    email:data.email
+                }
+                asiosPublic.post('/user',userInfo)
+                .then(res=>{
+                    if(res.data.insertedId){
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success Register",
+                            text: "Thanks For Register",
+                            footer: '<a href="#">Why do I have this issue?</a>'
+                        });
+                    }
+                })
+                
             })
-            .catch(error =>{
+            .catch(error => {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Something went wrong!",
                     footer: '<a href="#">Why do I have this issue?</a>'
-                  });
-                 console.error(error)
                 });
+                console.error(error)
+            });
     }
     const googlesubmit = () => {
         googlesignup()

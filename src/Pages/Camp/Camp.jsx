@@ -1,11 +1,66 @@
-import React from 'react';
-
+import axios, { Axios } from 'axios';
+import React, { useContext } from 'react';
+import { useState } from "react";
+import { Button,Modal } from "keep-react";
+import { CloudArrowUp } from "phosphor-react";
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../../Shared/Provider/Provider';
+import Swal from 'sweetalert2';
 
 const Camp = () => {
+  const { user } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
   const campdata = useLoaderData();
-  const { campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation } = campdata || {}
+  const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation } = campdata || {}
+  
+  const handaleSumit = (e) => {
+    e.preventDefault()
+    const from=e.target
+    const age = from.age.value
+    const phone = from.phone.value
+    const address = from.address.value
+    const price = from.price.value
 
+    const participantData = {
+      userName: user.displayName,
+      email: user.email,
+      userPhoto:user.photoURL,
+      age,
+      phone,
+      address,
+      price,
+      campName,
+      venueLocation,
+      scheduledDateTime,
+      image,
+      specialty
+    }
+    console.log(participantData)
+    const url = `http://localhost:5000/participant`;
+        axios.post(url, participantData)
+    .then(res => {
+      Swal.fire({
+          icon: "success",
+          title: "Wishlist...",
+          text: "ADD Wishlist Success",
+          footer: '<a href="#">Why do I have this issue?</a>'
+      });
+      console.log(res.data)
+  })
+  .catch(error => {
+      Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="#">Why do I have this issue?</a>'
+      });
+      console.error(error)
+  })
+  }
+  
+  const onClick = () => {
+    setShowModal(!showModal);
+  };
   const formatDateTime = dateTimeString => {
     const options = {
       day: '2-digit',
@@ -27,8 +82,63 @@ const Camp = () => {
         <h2 className='text-xl'>Location: {venueLocation}</h2>
         <p>{formatDateTime(scheduledDateTime)}</p>
       </div>
-      <div>
+
+      <div className='md:flex justify-between'>
         <p className='text-xl text-black'>category: {category}</p>
+      
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <>
+      <Button className='text-black' type='primary' onClick={onClick}>Modal</Button>
+      
+      <Modal
+        icon={<CloudArrowUp size={28} color="#1B4DFF" />}
+        size="md"
+        show={showModal}
+        position="top-center"
+      >
+        <Modal.Header>Do you want to upload this file?</Modal.Header>
+        <form onSubmit={handaleSumit}>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Age</span>
+          </label>
+          <input type="number" placeholder="Age" name='age' className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Phone</span>
+          </label>
+          <input type="number" placeholder="Phone" name='phone' className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Address</span>
+          </label>
+          <input type="text" placeholder="Address" name='address' className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Price</span>
+          </label>
+          <input type="text" defaultValue={price} placeholder="Price" name='price' className="input input-bordered" required />
+        </div>
+          <button className='my-5 btn btn-outline btn-secondary' type="primary">
+            Confirm
+          </button>
+        </form>
+        <div className=' justify-end items-end text-end'>
+        <button className='justify-end btn btn-outline btn-secondary' type="primary" onClick={onClick}>
+            Close
+          </button>
+        </div>
+       
+      </Modal>
+    </>
+
+      </div>
+      <div>
+        <p>{price}</p>
         <p className='text-xl text-black'>specialty: {specialty}</p>
         <p className='text-xl text-black'>Name: {name}</p>
         <p className='text-xl text-black'>Camp Name: {campName}</p>
@@ -38,50 +148,6 @@ const Camp = () => {
         <p className=''>{longDescription}</p>
       </div>
 
-
-
-
-
-      {/* <Card
-          className="max-w-xs overflow-hidden rounded-md"
-          imgSrc={image}
-          imgSize="md">
-          <Card.Container className="absolute right-3.5 top-3.5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-metal-50/50">
-            <Heart size={20} weight="bold" color="white" />
-          </Card.Container>
-          <Card.Container className="space-y-4 p-6">
-            <Card.Title className="flex items-center gap-2 text-body-5 font-medium text-metal-500 md:!text-body-4">
-              <MapPinLine size={20} color="#5E718D" />
-              <span>{venueLocation}</span>
-            </Card.Title>
-            <Card.Container className="flex items-center justify-between">
-              <Card.Title className="flex items-center gap-2 !text-body-5 font-medium text-metal-500">
-                <Bed size={20} color="#5E718D" />
-                <span>3 Bed Room</span>
-              </Card.Title>
-              <Card.Title className="flex items-center gap-2 !text-body-5 font-medium text-metal-500">
-                <Shower size={20} color="#5E718D" />
-                <span>1 Bath</span>
-              </Card.Title>
-            </Card.Container>
-            <Card.Container className="flex items-center justify-between">
-              <Card.Title className="flex items-center gap-2 !text-body-5 font-medium text-metal-500">
-                <ArrowsOutSimple size={20} color="#5E718D" />
-                <span>1,032 sqft</span>
-              </Card.Title>
-              <Card.Title className="flex items-center gap-2 !text-body-5 font-medium text-metal-500">
-                <Users size={20} color="#5E718D" />
-                <span>Family</span>
-              </Card.Title>
-            </Card.Container>
-            <Card.Container className="my-3 flex items-center justify-between">
-              <Button type="primary" size="sm">
-                Check Out
-              </Button>
-              <Card.Title className="text-body-3 font-medium text-metal-500">$649,00</Card.Title>
-            </Card.Container>
-          </Card.Container>
-        </Card> */}
     </div>
   );
 };

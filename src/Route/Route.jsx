@@ -9,6 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import AvailableCamps from "../Pages/Home/Home/AvailableCamps/AvailableCamps";
 import Camp from "../Pages/Camp/Camp";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import Dashboard from "../Layout/Dashboard";
+import RegisteredCamps from "../Pages/Dashboard/registeredCamps/registeredCamps";
 
 const router = createBrowserRouter([
     {
@@ -46,5 +48,15 @@ const router = createBrowserRouter([
         }
       ],
     },
+    {
+      path:'dashboard',
+      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+      children:[
+        {
+          path:'registered-camps',
+          element:<RegisteredCamps></RegisteredCamps>
+        }
+      ]
+    }
   ]);
   export default router
