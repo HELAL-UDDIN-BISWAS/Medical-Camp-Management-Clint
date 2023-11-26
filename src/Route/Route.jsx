@@ -4,13 +4,16 @@ import Home from "../Pages/Home/Home/Home";
 import Root from "../Root/Root";
 import Register from "../Shared/Register/Register";
 import Login from "../Shared/Login/Login";
-import Secreat from "../secreat/Secreat";
 import PrivateRoute from "./PrivateRoute";
 import AvailableCamps from "../Pages/Home/Home/AvailableCamps/AvailableCamps";
 import Camp from "../Pages/Camp/Camp";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import Dashboard from "../Layout/Dashboard";
 import RegisteredCamps from "../Pages/Dashboard/registeredCamps/registeredCamps";
+import Profile from "../Pages/Dashboard/Profile/Profile";
+import AllUser from "../Pages/Dashboard/ManageCamps/AllUser";
+import ManageCamps from "../Pages/Dashboard/ManageCamps/ManageCamps";
+import AddCamp from "../Pages/Dashboard/ManageCamps/AddCamp";
 
 const router = createBrowserRouter([
     {
@@ -28,10 +31,6 @@ const router = createBrowserRouter([
         {
           path: 'login',
           element:<Login></Login>
-        },
-        {
-          path:'secreat',
-          element: <PrivateRoute><Secreat></Secreat></PrivateRoute> 
         },
         {
           path:'availablecamps',
@@ -53,8 +52,24 @@ const router = createBrowserRouter([
       element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children:[
         {
+          path:'participant-profile',
+          element:<Profile></Profile>
+        },
+        {
+          path:'manage-registered-camps',
+          element:<AllUser></AllUser>
+        },
+        {
           path:'registered-camps',
           element:<RegisteredCamps></RegisteredCamps>
+        },
+        {
+          path:'manage-camps',
+          element:<ManageCamps></ManageCamps>
+        },
+        {
+          path:'add-a-camp',
+          element:<AddCamp></AddCamp>
         }
       ]
     }

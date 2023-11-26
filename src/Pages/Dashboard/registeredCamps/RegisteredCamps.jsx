@@ -24,7 +24,7 @@ const RegisteredCamps = () => {
                         .then(data => {
                             if (data.deletedCount > 0) {
                                 refetch()
-                                Swal.fire({
+                                 Swal.fire({
                                     title: 'success',
                                     text: 'Do you want to continue',
                                     icon: 'success',
