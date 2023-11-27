@@ -7,11 +7,7 @@ const AllUser = () => {
   const { data: users = [] } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/participantcamp',{
-        headers:{
-          authorization: `Bearer ${localStorage.getItem('access-token')}`
-        }
-      })
+      const res = await axiosSecure.get('/participantcamp')
       return res.data
     }
   })

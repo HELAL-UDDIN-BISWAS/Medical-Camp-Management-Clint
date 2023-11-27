@@ -13,8 +13,8 @@ const Camp = () => {
   const campdata = useLoaderData();
   const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation } = campdata || {}
   
-  e.preventDefault()
   const handaleSumit = (e) => {
+  e.preventDefault()
     const from=e.target
     const age = from.age.value
     const phone = from.phone.value

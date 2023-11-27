@@ -112,13 +112,14 @@ const ManageCamps = () => {
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Photo</th>
-              <th>Camp Name</th>
-              <th>Date And Time</th>
-              <th>Venue Location</th>
-              <th>Ubdate</th>
-              <th>Delete</th>
+              <th className='text-sky-500'></th>
+              <th className='text-sky-500'>Photo</th>
+              <th className='text-sky-500'>Camp Name</th>
+              <th className='text-sky-500'>Date And Time</th>
+              <th className='text-sky-500'>Venue Location</th>
+              <th className='text-sky-500'>Services</th>
+              <th className='text-sky-500'>Ubdate</th>
+              <th className='text-sky-500'>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -130,6 +131,7 @@ const ManageCamps = () => {
                   <td>{data.campName}</td>
                   <td>{formatDateTime(data.scheduledDateTime)}</td>
                   <td>{data.venueLocation}</td>
+                  <td>{data.specializedServices}</td>
                   <td> <Button className='text-lime-600 text-xl ' type='primary' onClick={()=>onClick(data)}><IoHammerOutline />
                  </Button></td>
                   <td><button onClick={() => handledelete(data._id)}>
