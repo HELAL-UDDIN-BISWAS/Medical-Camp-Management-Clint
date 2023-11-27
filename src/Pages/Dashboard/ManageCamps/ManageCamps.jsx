@@ -7,6 +7,7 @@ import { CloudArrowUp } from "phosphor-react";
 import { Button, Modal } from "keep-react";
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure ';
+import { useQuery } from '@tanstack/react-query';
 
 const ManageCamps = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,7 +17,7 @@ const ManageCamps = () => {
   const [ids,setids]=useState('')
  
 
-  const handleUbdate = async (data) => {
+  const handleUpdate = async (data) => {
     const imageFile = new FormData();
     imageFile.append('image', data.photo[0]);
     const { data: imagedata } = await axios.post('https://api.imgbb.com/1/upload?key=b425eed4264500ee966fabfc8c973be7', imageFile);
@@ -32,28 +33,27 @@ const ManageCamps = () => {
       longDescription: data.description
     }
   
-    axiosSecure.put(`/ubdateCamp/${id}`, userInfo)
+    axiosSecure.put(`/ubdateCamp/${ids._id}`, userInfo)
       .then(data => {
-        if (data.modifiedCount > 0) {
+        
+          refetch()
           Swal.fire({
             title: 'success',
             text: 'Do you want to continue',
             icon: 'success',
             confirmButtonText: 'Success'
           })
-        }
+      
       })
   }
-
-  useEffect(() => {
-    axios('http://localhost:5000/availableCamps')
-      .then(res => {
-        console.log(res.data)
-        setdata(res.data)
-      })
-      .catch(error => console.error(error))
-  }, []);
- 
+   
+  const { refetch, data: users = [] } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/availableCamps')
+      return res.data
+    }
+  })
   const handledelete = (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -72,7 +72,7 @@ const ManageCamps = () => {
             .then(res => res.json())
             .then(data => {
               if (data.deletedCount > 0) {
-                // refetch()
+                refetch()
                 Swal.fire({
                   title: 'success',
                   text: 'Do you want to continue',
@@ -96,11 +96,17 @@ const ManageCamps = () => {
     const formattedDateTime = new Date(dateTimeString).toLocaleString('en-US', options);
     return formattedDateTime;
   };
-  const onClick = () => {
+  const onClick = (data) => {
+    setids(data)
     setShowModal(!showModal);
+  
   };
+  console.log(ids)
   return (
     <div>
+       <div className="my-8">
+      <h3 className="text-indigo-500 text-center text-3xl ">Manage Camp</h3>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -117,19 +123,19 @@ const ManageCamps = () => {
           </thead>
           <tbody>
             {
-              datas.map((data, index) =>
+              users.map((data, index) =>
                 <tr className="bg-base-200" key={data._id}>
                   <th>{index + 1}</th>
                   <td><img className='h-8 w-8 rounded' src={data.image} alt="" /></td>
                   <td>{data.campName}</td>
                   <td>{formatDateTime(data.scheduledDateTime)}</td>
                   <td>{data.venueLocation}</td>
-                  <td> <Button className='text-lime-600 text-xl ' type='primary' onClick={()=>onClick(data._id)}><IoHammerOutline />
+                  <td> <Button className='text-lime-600 text-xl ' type='primary' onClick={()=>onClick(data)}><IoHammerOutline />
                  </Button></td>
                   <td><button onClick={() => handledelete(data._id)}>
                     <div><td className='text-red-600 text-xl'><MdDelete /></td></div>
                   </button></td>
-                 
+                
                 </tr>)
             }
           </tbody>
@@ -144,13 +150,13 @@ const ManageCamps = () => {
           position="top-center"
         >
 
-          <form onSubmit={handleSubmit(handleUbdate)} className="card-body">
+          <form onSubmit={handleSubmit(handleUpdate)} className="card-body">
             <div className="grid md:grid-cols-2 w-full gap-3">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">CampName</span>
                 </label>
-                <input type="text"  {...register("campname")} placeholder="Camp Name" className="input input-bordered" required />
+                <input type="text"   {...register("campname")} placeholder="Camp Name" className="input input-bordered" required />
               </div>
 
               <div className="form-control">

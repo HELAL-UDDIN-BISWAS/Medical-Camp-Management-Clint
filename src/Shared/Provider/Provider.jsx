@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.init";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 export const AuthContext = createContext(null)
 const Auth = getAuth(app)
 const Provider = ({ children }) => {
+  const axiosPublic=useAxiosPublic()
   const [user, setuser] = useState();
   const [loding, setloding] = useState(true)
   const provider = new GoogleAuthProvider()
@@ -33,10 +35,27 @@ const Provider = ({ children }) => {
   }
 
   useEffect(() => {
-    const subscribe = onAuthStateChanged(Auth, (currentuser) => {
-      console.log(currentuser)
-      setuser(currentuser)
-      setloding(false)
+    const subscribe = onAuthStateChanged(Auth, (currentUser) => {
+      console.log(currentUser)
+      setuser(currentUser)
+      if (currentUser) {
+        // get token and store client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post('/jwt', userInfo)
+            .then(res => {
+                if (res.data.token) {
+                    localStorage.setItem('access-token', res.data.token);
+                    setloding(false);
+                }
+            })
+    }
+    else {
+        // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+        localStorage.removeItem('access-token');
+        setloding(false);
+    }
+
+      
     });
     return () => {
       subscribe()

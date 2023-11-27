@@ -48,6 +48,9 @@ const AddCamp = () => {
         <div>
             <div className="hero min-h-screen bg-base-200 my-4">
                 <div className="rounded bg-base-100">
+                <div className="my-8">
+      <h3 className="text-indigo-500 text-center text-3xl ">Add A Camp</h3>
+      </div>
                     <form onSubmit={handleSubmit(handleAddCamp)} className="card-body">
                         <div className="grid md:grid-cols-2 w-full gap-3">
                             <div className="form-control">

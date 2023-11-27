@@ -57,12 +57,7 @@ const AvailableCamps = () => {
               </Card.Description>
             </Card.Container>
             <Card.Container className="flex items-center justify-start gap-5">
-              <Button size="sm" type="outlineGray">
-                <span className="pr-2">
-                  <ShoppingCart size={24} />
-                </span>
-                Add To Cart
-              </Button>
+             
               <Link to={`/camp-details/${data._id}`}>
               <Button size="sm" type="outlineGray">Detils</Button>
               </Link>

@@ -50,7 +50,7 @@ const RegisteredCamps = () => {
       };
     return (
         <div className="my-10 mx-5">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto">          
                 <table className="table">
                     {/* head */}
                     <thead>
