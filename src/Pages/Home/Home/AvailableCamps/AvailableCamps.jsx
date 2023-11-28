@@ -12,7 +12,7 @@ const AvailableCamps = () => {
     const [datas, setdata] = useState([])
     const [cart]=useTenstak()
     useEffect(() => {
-        axios('http://localhost:5000/availableCamps')
+        axios('https://y-tau-one.vercel.app/availableCamps')
             .then(res => {
                 console.log(res.data)
                 setdata(res.data)

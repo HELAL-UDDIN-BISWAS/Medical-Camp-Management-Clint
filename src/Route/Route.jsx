@@ -15,6 +15,7 @@ import AllUser from "../Pages/Dashboard/ManageCamps/AllUser";
 import ManageCamps from "../Pages/Dashboard/ManageCamps/ManageCamps";
 import AddCamp from "../Pages/Dashboard/ManageCamps/AddCamp";
 import AllSigninUser from "../Pages/Dashboard/ManageCamps/AllSigninUser";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
         {
           path:'/camp-details/:id',
           element:<Camp></Camp>,
-          loader: ({ params }) => fetch(`http://localhost:5000/availableCamp/${params.id}`)
+          loader: ({ params }) => fetch(`https://y-tau-one.vercel.app/availableCamp/${params.id}`)
         },
         {
           path:'contactUs',
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
         {
           path:'All-Signin-User',
           element:<AllSigninUser></AllSigninUser>
+        },
+        {
+          path:'payment',
+          element:<Payment></Payment>
         }
       ]
     }

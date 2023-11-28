@@ -36,13 +36,13 @@ const Camp = () => {
       specialty
     }
     console.log(participantData)
-    const url = `http://localhost:5000/participant`;
+    const url = `https://y-tau-one.vercel.app/participant`;
         axios.post(url, participantData)
     .then(res => {
       Swal.fire({
           icon: "success",
           title: "Wishlist...",
-          text: "ADD Wishlist Success",
+          text: "ADD Participant Success",
           footer: '<a href="#">Why do I have this issue?</a>'
       });
       console.log(res.data)

@@ -1,10 +1,14 @@
 import Swal from "sweetalert2";
 import useTenstak from "../../../Hooks/useTenstak";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const RegisteredCamps = () => {
 
     const [cart, refetch] = useTenstak();
+    const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price), 0);
+
+console.log(totalPrice)
     console.log(cart.length)
     console.log(cart)
     const handledelete = (id) => {
@@ -19,7 +23,7 @@ const RegisteredCamps = () => {
         })
             .then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`http://localhost:5000/participant/${id}`, {
+                    fetch(`https://y-tau-one.vercel.app/participant/${id}`, {
                         method: "DELETE",
                     })
                         .then(res => res.json())
@@ -52,6 +56,13 @@ const RegisteredCamps = () => {
     };
     return (
         <div className="my-10 mx-5">
+
+            <div className="flex justify-around items-center my-4">
+               <h3 className="text-orange-400 text-2xl"> TotalItem: {cart.length}</h3>
+               <h3 className="text-orange-400 text-2xl">TotalPrice: {totalPrice}</h3>
+               <Link  to="/dashboard/payment"><button className="btn btn-outline btn-secondary">Pay</button></Link>
+               
+            </div>
             <div className="overflow-x-auto">
 
                 {
@@ -72,7 +83,7 @@ const RegisteredCamps = () => {
                                 {
                                     cart.map((item, index) => <tr key={item._id}>
                                         <th>{index + 1}</th>
-                                        <td><img className="h-8 w-8 rounded" src={item.userPhoto} alt="" /></td>
+                                        <td><img className="h-8 w-8 rounded" src={item.image} alt="" /></td>
                                         <td>{formatDateTime(item.scheduledDateTime)}</td>
                                         <td>{item.venueLocation}</td>
                                         <td>{item.specialty}</td>
