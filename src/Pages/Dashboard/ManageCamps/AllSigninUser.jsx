@@ -44,7 +44,7 @@ const AllSigninUser = () => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              fetch(`https://y-tau-one.vercel.app/user/${id}`, {
+              fetch(`http://localhost:5000/user/${id}`, {
                 method: "DELETE",
               })
                 .then(res => res.json())

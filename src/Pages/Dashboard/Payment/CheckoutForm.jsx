@@ -1,57 +1,96 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure ";
+import useTenstak from "../../../Hooks/useTenstak";
+import { useContext } from "react";
+import { AuthContext } from "../../../Shared/Provider/Provider";
 
 const CheckoutForm = () => {
-    const [error,seterror]=useState('')
-    const stripe=useStripe();
-    const element=useElements();
+  const {user}=useContext(AuthContext);
+  const [transactionId,settransactionId]=useState('')
+  const [error, seterror] = useState('')
+  const [clientSecret, setClientSecret]=useState('')
+  const stripe = useStripe();
+  const element = useElements();
+  const axiosSecure = useAxiosSecure();
+  const [cart, refetch] = useTenstak();
+  const totalPrice = cart.reduce((total, item) => total + parseInt(item.price), 0);
+console.log(totalPrice)
+  useEffect(() => {
+   axiosSecure.post('/create-payment-intent',{price: totalPrice})
+  .then(res=>{
+    console.log(res.data.clientSecret)
+    setClientSecret(res.data.clientSecret)
+  })
+  }, [axiosSecure,totalPrice])
 
-    const handleSubmit=async(event)=>{
-        event.preventDefault()
-        if(!stripe || !element){
-            return
-        }
-        const card=element.getElement(CardElement);
-        if(card == null){
-            return
-        }
-        const {error,paymentMethod}=await stripe.createPaymentMethod({
-            type:'card',
-            card,
-        });
-        if(error){
-            console.log('[error]',error)
-            seterror(error.message)
-        }else{
-            seterror('')
-            console.log('[paymentMethod]',paymentMethod)
-        }
-
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (!stripe || !element) {
+      return
     }
-    return (
-        <form className="w-3/5" onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
-                },
-              },
-              invalid: {
-                color: '#9e2146',
+    const card = element.getElement(CardElement);
+    if (card == null) {
+      return
+    }
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card,
+    });
+    if (error) {
+      console.log('[error]', error)
+      seterror(error.message)
+    } else {
+      seterror('')
+      console.log('[paymentMethod]', paymentMethod)
+    }
+
+    //confim messege
+    const {paymentIntent, error: confimError }=await stripe.confirmCardPayment(clientSecret,{
+      payment_method:{
+        card: card,
+        billing_details:{
+          email: user.email || 'anonymous',
+          name: user.displayName || 'anonymous'
+        }
+      }
+    })
+    if(confimError){
+      console.log('confirm error')
+    }else{
+      console.log('payment intent', paymentIntent);
+      if(paymentIntent.status === 'succeeded'){
+        console.log('transaction id', paymentIntent.id)
+        settransactionId(paymentIntent.id)
+      }
+    }
+
+  }
+  return (
+    <form className="w-3/5" onSubmit={handleSubmit}>
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#424770',
+              '::placeholder': {
+                color: '#aab7c4',
               },
             },
-          }}
-        />
-        <button className="btn m-3" type="submit" disabled={!stripe}>
-          Pay
-        </button>
-        <p className="text-red-500">{error}</p>
-      </form>
-    );
+            invalid: {
+              color: '#9e2146',
+            },
+          },
+        }}
+      />
+      <button className="btn m-3" type="submit" disabled={!stripe || !clientSecret}>
+        Pay
+      </button>
+      <p className="text-red-500">{error}</p>
+      <p>{transactionId}</p>
+    </form>
+  );
 };
 
 export default CheckoutForm;

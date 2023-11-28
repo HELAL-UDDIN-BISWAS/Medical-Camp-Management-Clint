@@ -66,7 +66,7 @@ const ManageCamps = () => {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          fetch(`https://y-tau-one.vercel.app/deletecamp/${id}`, {
+          fetch(`http://localhost:5000/deletecamp/${id}`, {
             method: "DELETE",
           })
             .then(res => res.json())

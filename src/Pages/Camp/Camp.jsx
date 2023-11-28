@@ -36,7 +36,7 @@ const Camp = () => {
       specialty
     }
     console.log(participantData)
-    const url = `https://y-tau-one.vercel.app/participant`;
+    const url = `http://localhost:5000/participant`;
         axios.post(url, participantData)
     .then(res => {
       Swal.fire({

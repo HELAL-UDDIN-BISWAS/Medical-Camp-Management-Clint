@@ -8,7 +8,7 @@ const useTenstak = () => {
     const { refetch, data: cart = [] } = useQuery({
         queryKey: ['cart', user?.email],
         queryFn: async () => {
-            const res = await axios.get(`https://y-tau-one.vercel.app/participant?email=${user.email}`)
+            const res = await axios.get(`http://localhost:5000/participant?email=${user.email}`)
             return res.data
         }
     })
