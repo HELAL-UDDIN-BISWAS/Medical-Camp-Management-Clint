@@ -20,18 +20,19 @@ const AllSigninUser = () => {
         axiosPublic.patch(`/user/admin/${id}`)
             .then(res=>{
                 console.log(res.data)
-                // if(res.data.modifiedCount > 0){
-                    // Swal.fire({
-                    //     position: "top-end",
-                    //     icon: "success",
-                    //     title: "Your work has been saved",
-                    //     showConfirmButton: false,
-                    //     timer: 1500
-                    //   });
-                // }
+                if(res.data.modifiedCount > 0){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                }
             })
       }
       const handleDelete = (id) => {
+        refetch()
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",
@@ -83,7 +84,7 @@ const AllSigninUser = () => {
           <tbody>
             {
               users.map((user, index) =>
-                <tr>
+                <tr key={user._id}>
                   <th>{index + 1}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>

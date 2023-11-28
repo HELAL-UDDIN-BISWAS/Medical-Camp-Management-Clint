@@ -47,7 +47,8 @@ const Register = () => {
             });
     }
     const googlesubmit = () => {
-        googlesignup()
+        googlesignup();
+      
     }
 
     return (
