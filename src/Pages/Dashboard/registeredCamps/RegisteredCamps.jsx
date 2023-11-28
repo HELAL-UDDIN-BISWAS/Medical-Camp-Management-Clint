@@ -3,7 +3,9 @@ import useTenstak from "../../../Hooks/useTenstak";
 import { MdDelete } from "react-icons/md";
 
 const RegisteredCamps = () => {
-    const [cart,refetch] = useTenstak()
+
+    const [cart, refetch] = useTenstak();
+    console.log(cart.length)
     console.log(cart)
     const handledelete = (id) => {
         Swal.fire({
@@ -24,7 +26,7 @@ const RegisteredCamps = () => {
                         .then(data => {
                             if (data.deletedCount > 0) {
                                 refetch()
-                                 Swal.fire({
+                                Swal.fire({
                                     title: 'success',
                                     text: 'Do you want to continue',
                                     icon: 'success',
@@ -33,7 +35,7 @@ const RegisteredCamps = () => {
                             }
                         })
                 }
-               
+
             });
     }
     const formatDateTime = dateTimeString => {
@@ -44,41 +46,46 @@ const RegisteredCamps = () => {
             year: 'numeric',
             month: '2-digit',
         };
-    
+
         const formattedDateTime = new Date(dateTimeString).toLocaleString('en-US', options);
         return formattedDateTime;
-      };
+    };
     return (
         <div className="my-10 mx-5">
-            <div className="overflow-x-auto">          
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th>Serial</th>
-                            <th>Photo</th>
-                            <th>Time And Date</th>
-                            <th className="">Venue</th>
-                            <th>Specialty</th>
-                            <th>Price</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            cart.map((item, index) => <tr key={item._id}>
-                                <th>{index + 1}</th>
-                                <td><img className="h-8 w-8 rounded" src={item.userPhoto} alt="" /></td>
-                                <td>{formatDateTime(item.scheduledDateTime)}</td>
-                                <td>{item.venueLocation}</td>
-                                <td>{item.specialty}</td>
-                                <td>{item.price}</td>
-                                <td><button onClick={()=>handledelete(item._id)} className="text-xl text-red-700"><MdDelete /></button></td>
-                            </tr>)
-                        }
+            <div className="overflow-x-auto">
 
-                    </tbody>
-                </table>
+                {
+                    cart.length > 0 ? <>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Serial</th>
+                                    <th>Photo</th>
+                                    <th>Time And Date</th>
+                                    <th className="">Venue</th>
+                                    <th>Specialty</th>
+                                    <th>Price</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    cart.map((item, index) => <tr key={item._id}>
+                                        <th>{index + 1}</th>
+                                        <td><img className="h-8 w-8 rounded" src={item.userPhoto} alt="" /></td>
+                                        <td>{formatDateTime(item.scheduledDateTime)}</td>
+                                        <td>{item.venueLocation}</td>
+                                        <td>{item.specialty}</td>
+                                        <td>{item.price}</td>
+                                        <td><button onClick={() => handledelete(item._id)} className="text-xl text-red-700"><MdDelete /></button></td>
+                                    </tr>)
+                                }
+                            </tbody>
+                        </table>
+                    </> : <>
+                        <h1 className="text-4xl text-center mt-10">Add Participant Camps</h1>
+                    </>
+                }
             </div>
         </div>
     );

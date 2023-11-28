@@ -13,6 +13,7 @@ const Dashboard = () => {
                                 <li><NavLink to='/dashboard/manage-registered-camps'>Rregistered-Camps</NavLink></li>
                                 <li><NavLink to='/dashboard/manage-camps'>Manage-Camps</NavLink></li>
                                 <li><NavLink to='/dashboard/add-a-camp'>Add-A-Camp</NavLink></li>
+                                <li><NavLink to='/dashboard/All-Signin-User'>All-Signin-User</NavLink></li>
                             </> :
                             <>
                                 <li><NavLink to='/dashboard/participant-profile'>Profile</NavLink></li>

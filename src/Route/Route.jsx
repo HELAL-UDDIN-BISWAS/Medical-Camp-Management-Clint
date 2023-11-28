@@ -9,11 +9,12 @@ import AvailableCamps from "../Pages/Home/Home/AvailableCamps/AvailableCamps";
 import Camp from "../Pages/Camp/Camp";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import Dashboard from "../Layout/Dashboard";
-import RegisteredCamps from "../Pages/Dashboard/registeredCamps/registeredCamps";
+import RegisteredCamps from "../Pages/Dashboard/registeredCamps/RegisteredCamps";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import AllUser from "../Pages/Dashboard/ManageCamps/AllUser";
 import ManageCamps from "../Pages/Dashboard/ManageCamps/ManageCamps";
 import AddCamp from "../Pages/Dashboard/ManageCamps/AddCamp";
+import AllSigninUser from "../Pages/Dashboard/ManageCamps/AllSigninUser";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
         {
           path:'add-a-camp',
           element:<AddCamp></AddCamp>
+        },
+        {
+          path:'All-Signin-User',
+          element:<AllSigninUser></AllSigninUser>
         }
       ]
     }
