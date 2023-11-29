@@ -15,15 +15,19 @@ const CheckoutForm = () => {
   const element = useElements();
   const axiosSecure = useAxiosSecure();
   const [cart, refetch] = useTenstak();
+  console.log("cart",cart)
   const totalPrice = cart.reduce((total, item) => total + parseInt(item.price), 0);
   console.log(totalPrice)
   useEffect(() => {
-    axiosSecure.post('/create-payment-intent', { price: totalPrice })
+    if(totalPrice > 0){
+      axiosSecure.post('/create-payment-intent', { price: totalPrice })
       .then(res => {
         console.log(res.data.clientSecret)
         setClientSecret(res.data.clientSecret)
       })
-  }, [axiosSecure, totalPrice])
+    }
+   
+  }, [totalPrice])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -86,7 +90,6 @@ const CheckoutForm = () => {
           });
           navigate('/dashboard/paymentHistory')
         }
-
       }
     }
 

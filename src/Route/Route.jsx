@@ -17,6 +17,7 @@ import AddCamp from "../Pages/Dashboard/ManageCamps/AddCamp";
 import AllSigninUser from "../Pages/Dashboard/ManageCamps/AllSigninUser";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/Payment/PaymentHistory";
+import Feedback from "../Pages/Dashboard/Payment/feedback";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
         {
           path:'PaymentHistory',
           element:<PaymentHistory></PaymentHistory>
+        },
+        {
+          path:'feedback-and-ratings',
+          element:<Feedback></Feedback>
         }
       ]
     }

@@ -11,9 +11,9 @@ const Camp = () => {
   const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const campdata = useLoaderData();
-  const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation } = campdata || {}
+  const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation,_id } = campdata || {}
   
-  const handaleSumit = (e) => {
+  const handaleSumit = async(e) => {
   e.preventDefault()
     const from=e.target
     const age = from.age.value
@@ -55,6 +55,9 @@ const Camp = () => {
       });
       console.error(error)
   })
+  const countRes= await axios.patch(`/camp-count/${_id}`)
+  .then(res=>console.log(res))
+  console.log(countRes)
   }
   
   const onClick = () => {
@@ -87,7 +90,7 @@ const Camp = () => {
       
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <>
-      <Button className='text-black' type='primary' onClick={onClick}>Modal</Button>
+      <Button className='text-black btn' type='primary' onClick={onClick}>Register</Button>
       
       <Modal
         icon={<CloudArrowUp size={28} color="#1B4DFF" />}

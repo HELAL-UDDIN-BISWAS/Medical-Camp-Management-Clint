@@ -20,6 +20,7 @@ const Dashboard = () => {
                                 <li><NavLink to='/dashboard/participant-profile'>Profile</NavLink></li>
                                 <li><NavLink to='/dashboard/registered-camps'>My cart</NavLink></li>
                                 <li><NavLink to='/dashboard/PaymentHistory'>Payment History</NavLink></li>
+                                <li><NavLink to='/dashboard/feedback-and-ratings'>feedback-and-ratings</NavLink></li>
                             </>
                     }
                     <div className="divider divider-start"></div>
