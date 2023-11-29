@@ -4,25 +4,26 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure ";
 import useTenstak from "../../../Hooks/useTenstak";
 import { useContext } from "react";
 import { AuthContext } from "../../../Shared/Provider/Provider";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
-  const {user}=useContext(AuthContext);
-  const [transactionId,settransactionId]=useState('')
+  const { user } = useContext(AuthContext);
+  const [transactionId, settransactionId] = useState('')
   const [error, seterror] = useState('')
-  const [clientSecret, setClientSecret]=useState('')
+  const [clientSecret, setClientSecret] = useState('')
   const stripe = useStripe();
   const element = useElements();
   const axiosSecure = useAxiosSecure();
   const [cart, refetch] = useTenstak();
   const totalPrice = cart.reduce((total, item) => total + parseInt(item.price), 0);
-console.log(totalPrice)
+  console.log(totalPrice)
   useEffect(() => {
-   axiosSecure.post('/create-payment-intent',{price: totalPrice})
-  .then(res=>{
-    console.log(res.data.clientSecret)
-    setClientSecret(res.data.clientSecret)
-  })
-  }, [axiosSecure,totalPrice])
+    axiosSecure.post('/create-payment-intent', { price: totalPrice })
+      .then(res => {
+        console.log(res.data.clientSecret)
+        setClientSecret(res.data.clientSecret)
+      })
+  }, [axiosSecure, totalPrice])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -46,22 +47,46 @@ console.log(totalPrice)
     }
 
     //confim messege
-    const {paymentIntent, error: confimError }=await stripe.confirmCardPayment(clientSecret,{
-      payment_method:{
+    const { paymentIntent, error: confimError } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
         card: card,
-        billing_details:{
+        billing_details: {
           email: user.email || 'anonymous',
           name: user.displayName || 'anonymous'
         }
       }
     })
-    if(confimError){
+    if (confimError) {
       console.log('confirm error')
-    }else{
+    } else {
       console.log('payment intent', paymentIntent);
-      if(paymentIntent.status === 'succeeded'){
+      if (paymentIntent.status === 'succeeded') {
         console.log('transaction id', paymentIntent.id)
         settransactionId(paymentIntent.id)
+        const payment = {
+          email: user.email,
+          price: totalPrice,
+          transactionId: paymentIntent.id,
+          date: new Date(),
+          cartIds: cart.map(item => item._id),
+          menuItemIds: cart.map(item => item.menuId),
+          status: 'pending'
+        }
+
+        const res = await axiosSecure.post('/payments', payment);
+        console.log('payment saved', res.data);
+        refetch();
+        if (res.data?.paymentResult?.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Thank you payment",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate('/dashboard/paymentHistory')
+        }
+
       }
     }
 

@@ -36,7 +36,7 @@ const AllUser = () => {
             <tr>
               <th>Serile</th>
               <th>Photo</th>
-              <th>Name</th>
+              <th>Venue</th>
               <th>Date and Time</th>
               <th>Camp Fees</th>
               <th>User</th>
@@ -47,8 +47,8 @@ const AllUser = () => {
               users.map((user, index) =>
                 <tr>
                   <th>{index + 1}</th>
-                  <td><img className="h-8 w-8 rounded" src={user.userPhoto} alt="" /></td>
-                  <td>{user.userName}</td>
+                  <td><img className="h-8 w-8 rounded" src={user.image} alt="" /></td>
+                  <td>{user.venueLocation}</td>
                   <td>{formatDateTime(user.scheduledDateTime)}</td>
                   <td>${user.price}</td>
                   <td className="text-xl"><FaUsers /></td>

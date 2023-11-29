@@ -31,7 +31,6 @@ const Camp = () => {
       price,
       campName,
       venueLocation,
-      scheduledDateTime,
       image,
       specialty
     }
