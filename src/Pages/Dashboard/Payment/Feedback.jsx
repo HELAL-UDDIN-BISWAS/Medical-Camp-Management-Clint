@@ -3,9 +3,12 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Shared/Provider/Provider";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure ";
 import useTenstak from "../../../Hooks/useTenstak";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { useState } from "react";
 
 
 const Feedback = () => {
+    const axiosPublic=useAxiosPublic();
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [cart, refetch] = useTenstak();
@@ -16,16 +19,21 @@ const Feedback = () => {
             return res.data;
         }
     })
-    console.log(payments)
+  
+
+
    const handleRating=(event)=>{
       event.preventDefault()
       const rating=event.target.rating.value;
       const ratingInfo={
         rating,
+        vanue:cart.find(item=>item.venueLocation),
         date: new Date(),
         email: user.email,
         name: user.displayName,
       }
+      axiosPublic.post('/rating/',ratingInfo)
+      .then(res=>console.log(res))
       console.log(ratingInfo)
       console.log(user)
    }
@@ -40,7 +48,6 @@ const Feedback = () => {
                             <th></th>
                             <th>price</th>
                             <th>Status</th>
-                            <th>Vanue</th>
                             <th>Rating</th>
                             
                         </tr>
@@ -51,7 +58,7 @@ const Feedback = () => {
                             <th>{index + 1}</th>
                             <td>${payment.price}</td> 
                             <td>{payment.status}</td>
-                            <td></td>
+                            
                             <td> <form onSubmit={handleRating} className="flex" action="">
                                 <div className="">
                                     <input type="number" name="rating" placeholder="Rating" className="input input-bordered" required />
