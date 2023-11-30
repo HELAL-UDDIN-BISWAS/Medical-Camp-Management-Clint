@@ -35,7 +35,7 @@ const Camp = () => {
       specialty
     }
     console.log(participantData)
-    const url = `http://localhost:5000/participant`;
+    const url = `https://y-tau-one.vercel.app/participant`;
     axios.post(url, participantData)
       .then(res => {
         
@@ -56,7 +56,7 @@ const Camp = () => {
         });
         console.error(error)
       })
-      const countRes =await axios.patch(`http://localhost:5000/camp-count/${_id}`,)
+      const countRes =await axios.patch(`https://y-tau-one.vercel.app/camp-count/${_id}`,)
         console.log(countRes)
    
   }

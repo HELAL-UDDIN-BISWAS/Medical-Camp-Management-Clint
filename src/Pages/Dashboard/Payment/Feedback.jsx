@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure ";
 import useTenstak from "../../../Hooks/useTenstak";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 const Feedback = () => {
@@ -33,7 +34,17 @@ const Feedback = () => {
         name: user.displayName,
       }
       axiosPublic.post('/rating/',ratingInfo)
-      .then(res=>console.log(res))
+      .then(res=>{
+        
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        console.log(res)})
+        .catch(error=>console.error(error))
       console.log(ratingInfo)
       console.log(user)
    }

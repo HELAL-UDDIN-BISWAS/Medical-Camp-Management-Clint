@@ -1,9 +1,8 @@
 
 import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -31,7 +30,6 @@ const Banner = () => {
         <SwiperSlide><img className='h-[80vh] w-full' src="https://i.ibb.co/F6qSKzS/pexels-anna-shvets-4225880.jpg" alt="" /></SwiperSlide>
       </Swiper>
     </>
-        {/* "https://i.ibb.co/JqfYn8N/pexels-antoni-shkraba-6749778.jpg" /> */}
       </div>
      
        

@@ -23,7 +23,7 @@ console.log(totalPrice)
         })
             .then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`http://localhost:5000/participant/${id}`, {
+                    fetch(`https://y-tau-one.vercel.app/participant/${id}`, {
                         method: "DELETE",
                     })
                         .then(res => res.json())

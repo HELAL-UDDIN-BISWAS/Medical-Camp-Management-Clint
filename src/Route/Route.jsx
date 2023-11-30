@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         {
           path:'/camp-details/:id',
           element:<Camp></Camp>,
-          loader: ({ params }) => fetch(`http://localhost:5000/availableCamp/${params.id}`)
+          loader: ({ params }) => fetch(`https://y-tau-one.vercel.app/availableCamp/${params.id}`)
         },
         {
           path:'contactUs',

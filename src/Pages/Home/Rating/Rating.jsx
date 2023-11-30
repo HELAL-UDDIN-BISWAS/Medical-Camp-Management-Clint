@@ -14,7 +14,7 @@ const Ratings= () => {
     const axiosPublic=useAxiosPublic()
         const [ratings, setrating] = useState([])
         useEffect(() => {
-            fetch('http://localhost:5000/rating')
+            fetch('https://y-tau-one.vercel.app/rating')
                 .then(res => res.json())
                 .then(data => {
                     // console.log(data)

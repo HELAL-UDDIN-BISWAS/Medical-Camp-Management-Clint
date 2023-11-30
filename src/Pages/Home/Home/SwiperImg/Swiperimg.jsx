@@ -24,9 +24,6 @@ const Swiperimg = () => {
         className="mySwiper"
       >
         
-
-
-
         <SwiperSlide>
           <img className='rounded' src={'https://i.ibb.co/R7z64M7/pexels-tima-miroshnichenko-5407206.jpg'} alt="" />
           <h2></h2>

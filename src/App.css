@@ -1,0 +1,16 @@
+.color {
+    height: 400px;
+    background-image: url('');
+    background-position: center;
+}
+
+.round {
+    border-radius: 0 25% 25% 25%;
+}
+
+.featured {
+    background: linear-gradient(0deg, rgba(71, 69, 70, 0.5), rgba(39, 33, 36, 0.3)), url('https://i.ibb.co/9yt9DkC/pexels-mart-production-7088841.jpg');
+    background-position: center;
+    background-size: cover;
+
+}
