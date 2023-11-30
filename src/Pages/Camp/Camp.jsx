@@ -1,7 +1,7 @@
 import axios, { Axios } from 'axios';
 import React, { useContext } from 'react';
 import { useState } from "react";
-import { Button,Modal } from "keep-react";
+import { Button, Modal } from "keep-react";
 import { CloudArrowUp } from "phosphor-react";
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../Shared/Provider/Provider';
@@ -11,11 +11,11 @@ const Camp = () => {
   const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const campdata = useLoaderData();
-  const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation,_id } = campdata || {}
-  
-  const handaleSumit = async(e) => {
-  e.preventDefault()
-    const from=e.target
+  const { price, campName, category, image, longDescription, name, scheduledDateTime, shortDescription, specializedServices, specialty, targetAudience, venueLocation, _id } = campdata || {}
+
+  const handaleSumit =async(e) => {
+    e.preventDefault()
+    const from = e.target
     const age = from.age.value
     const phone = from.phone.value
     const address = from.address.value
@@ -24,7 +24,7 @@ const Camp = () => {
     const participantData = {
       userName: user.displayName,
       email: user.email,
-      userPhoto:user.photoURL,
+      userPhoto: user.photoURL,
       age,
       phone,
       address,
@@ -36,30 +36,31 @@ const Camp = () => {
     }
     console.log(participantData)
     const url = `http://localhost:5000/participant`;
-        axios.post(url, participantData)
-    .then(res => {
-      Swal.fire({
+    axios.post(url, participantData)
+      .then(res => {
+        
+        Swal.fire({
           icon: "success",
           title: "Wishlist...",
           text: "ADD Participant Success",
           footer: '<a href="#">Why do I have this issue?</a>'
-      });
-      console.log(res.data)
-  })
-  .catch(error => {
-      Swal.fire({
+        });
+        console.log(res.data)
+      })
+      .catch(error => {
+        Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
           footer: '<a href="#">Why do I have this issue?</a>'
-      });
-      console.error(error)
-  })
-  const countRes= await axios.patch(`/camp-count/${_id}`)
-  .then(res=>console.log(res))
-  console.log(countRes)
+        });
+        console.error(error)
+      })
+      const countRes =await axios.patch(`http://localhost:5000/camp-count/${_id}`,)
+        console.log(countRes)
+   
   }
-  
+
   const onClick = () => {
     setShowModal(!showModal);
   };
@@ -87,56 +88,56 @@ const Camp = () => {
 
       <div className='md:flex justify-between'>
         <p className='text-xl text-black'>category: {category}</p>
-      
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <>
-      <Button className='text-black btn' type='primary' onClick={onClick}>Register</Button>
-      
-      <Modal
-        icon={<CloudArrowUp size={28} color="#1B4DFF" />}
-        size="md"
-        show={showModal}
-        position="top-center"
-      >
-        <Modal.Header>Do you want to upload this file?</Modal.Header>
-        <form onSubmit={handaleSumit}>
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Age</span>
-          </label>
-          <input type="number" placeholder="Age" name='age' className="input input-bordered" required />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Phone</span>
-          </label>
-          <input type="number" placeholder="Phone" name='phone' className="input input-bordered" required />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Address</span>
-          </label>
-          <input type="text" placeholder="Address" name='address' className="input input-bordered" required />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Price</span>
-          </label>
-          <input type="text" defaultValue={price} placeholder="Price" name='price' className="input input-bordered" required />
-        </div>
-          <button className='my-5 btn btn-outline btn-secondary' type="primary">
-            Confirm
-          </button>
-        </form>
-        <div className=' justify-end items-end text-end'>
-        <button className='justify-end btn btn-outline btn-secondary' type="primary" onClick={onClick}>
-            Close
-          </button>
-        </div>
-       
-      </Modal>
-    </>
+        {/* Open the modal using document.getElementById('ID').showModal() method */}
+        <>
+          <Button className='text-black btn' type='primary' onClick={onClick}>Register</Button>
+
+          <Modal
+            icon={<CloudArrowUp size={28} color="#1B4DFF" />}
+            size="md"
+            show={showModal}
+            position="top-center"
+          >
+            <Modal.Header></Modal.Header>
+            <form onSubmit={handaleSumit}>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Age</span>
+                </label>
+                <input type="number" placeholder="Age" name='age' className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Phone</span>
+                </label>
+                <input type="number" placeholder="Phone" name='phone' className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Address</span>
+                </label>
+                <input type="text" placeholder="Address" name='address' className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Price</span>
+                </label>
+                <input type="text" defaultValue={price} placeholder="Price" name='price' className="input input-bordered" required />
+              </div>
+              <button className='my-5 btn btn-outline btn-secondary' type="primary">
+                Confirm
+              </button>
+            </form>
+            <div className=' justify-end items-end text-end'>
+              <button className='justify-end btn btn-outline btn-secondary' type="primary" onClick={onClick}>
+                Close
+              </button>
+            </div>
+
+          </Modal>
+        </>
 
       </div>
       <div>
