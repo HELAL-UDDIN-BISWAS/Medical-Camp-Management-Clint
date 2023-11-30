@@ -136,8 +136,7 @@ const ManageCamps = () => {
                  </Button></td>
                   <td><button onClick={() => handledelete(data._id)}>
                     <div><td className='text-red-600 text-xl'><MdDelete /></td></div>
-                  </button></td>
-                
+                  </button></td>               
                 </tr>)
             }
           </tbody>
