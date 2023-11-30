@@ -28,14 +28,12 @@ const Feedback = () => {
       const rating=event.target.rating.value;
       const ratingInfo={
         rating,
-        vanue:cart.find(item=>item.venueLocation),
         date: new Date(),
         email: user.email,
         name: user.displayName,
       }
       axiosPublic.post('/rating/',ratingInfo)
-      .then(res=>{
-        
+      .then(res=>{   
         Swal.fire({
             position: "top-end",
             icon: "success",
