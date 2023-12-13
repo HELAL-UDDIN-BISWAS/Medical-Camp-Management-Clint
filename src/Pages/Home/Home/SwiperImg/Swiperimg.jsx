@@ -25,23 +25,23 @@ const Swiperimg = () => {
       >
         
         <SwiperSlide>
-          <img className='rounded' src={'https://i.ibb.co/R7z64M7/pexels-tima-miroshnichenko-5407206.jpg'} alt="" />
+          <img className='rounded h-[500px]' src={'https://i.ibb.co/1Q8Rmfr/pexels-byb-byb-19332231.jpg'} alt="" />
           <h2></h2>
         </SwiperSlide>
         <SwiperSlide>
-          <img className='rounded' src={'https://i.ibb.co/K6Z2B3g/pexels-rfstudio-3825586.jpg'} alt="" />
+          <img className='rounded h-[500px]' src={'https://i.ibb.co/K6Z2B3g/pexels-rfstudio-3825586.jpg'} alt="" />
           <h2></h2>
         </SwiperSlide>
         <SwiperSlide>
-          <img className='rounded' src={'https://i.ibb.co/sv3VhCz/pexels-tran-nhu-tuan-14438785.jpg'} alt="" />
+          <img className='rounded h-[500px]' src={'https://i.ibb.co/MNZTMbt/pexels-goran-grudi-19328506.jpg'} alt="" />
           <h2></h2>
         </SwiperSlide>
         <SwiperSlide>
-          <img className='rounded' src={'https://i.ibb.co/9yt9DkC/pexels-mart-production-7088841.jpg'} alt="" />
+          <img className='rounded h-[500px]' src={'https://i.ibb.co/9yt9DkC/pexels-mart-production-7088841.jpg'} alt="" />
           <h2></h2>
         </SwiperSlide>
         <SwiperSlide>
-          <img className='rounded' src={'https://i.ibb.co/R7z64M7/pexels-tima-miroshnichenko-5407206.jpg'} alt="" />
+          <img className='rounded h-[500px]' src={'https://i.ibb.co/rpTmbNZ/pexels-mart-production-7088530.jpg'} alt="" />
           <h2></h2>
         </SwiperSlide>
       </Swiper>

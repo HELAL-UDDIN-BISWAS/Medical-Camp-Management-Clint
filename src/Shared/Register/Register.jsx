@@ -50,14 +50,12 @@ const Register = () => {
         googlesignup()
         .then(res=>{
             console.log(res)
-
             const userInfo={
                 name: user.displayName,
                 email: user.email
             }
             asiosPublic.post('/user',userInfo)
-        })
-    
+        })   
         .catch(error=>console.log(error))
 
       

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm } from "react-hook-form"
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from '../Provider/Provider';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+// import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
@@ -10,7 +10,7 @@ import useAxiosPublic from '../../Hooks/useAxiosPublic';
 const Login = () => {
     const axiosPublic=useAxiosPublic()
     const captcharef = useRef(null)
-    const [desabol, setdesabol] = useState(true)
+    // const [desabol, setdesabol] = useState(true)
     const location = useLocation()
     const navigate = useNavigate()
     const { loginUser } = useContext(AuthContext)
@@ -39,17 +39,17 @@ const Login = () => {
         });
     };
 
-    const handleCaptcha = (e) => {
-        e.preventDefault()
-        const user_captcha_value = captcharef.current.value
-        if (validateCaptcha((user_captcha_value))) {
-            setdesabol(false)
-        }
-        else {
-            setdesabol(true)
-        }
-        console.log(user_captcha_value)
-    };
+    // const handleCaptcha = (e) => {
+    //     e.preventDefault()
+    //     const user_captcha_value = captcharef.current.value
+    //     if (validateCaptcha((user_captcha_value))) {
+    //         setdesabol(false)
+    //     }
+    //     else {
+    //         setdesabol(true)
+    //     }
+    //     console.log(user_captcha_value)
+    // };
 
     const googlesubmit = () => {
         googlesignup()
@@ -69,9 +69,9 @@ const Login = () => {
     };
 
     const from = location.state?.from?.pathname || '/';
-    useEffect(() => {
-        loadCaptchaEnginge(6);
-    }, []);
+    // useEffect(() => {
+    //     loadCaptchaEnginge(6);
+    // }, []);
 
     return (
         <div>
@@ -92,16 +92,16 @@ const Login = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <LoadCanvasTemplate />
+                                {/* <LoadCanvasTemplate /> */}
                             </label>
-                            <input type="text" onBlur={handleCaptcha} ref={captcharef} name="captcha" placeholder="Captcha" className="input input-bordered" required />
+                            {/* <input type="text"  ref={captcharef} name="captcha" placeholder="Captcha" className="input input-bordered" required /> */}
                         </div>
                         <div className="form-control mt-6">
-                            <button disabled={desabol} className="btn btn-primary">Login</button>
+                            <button  className="btn btn-primary">Login</button>
                         </div>
                     </form>
                     <div className="mx-5 form-control mb-6">
-                        <button disabled={desabol} onClick={googlesubmit} className="btn btn-outline btn-secondary px-6 text-2xl"><FcGoogle /></button>
+                        <button onClick={googlesubmit} className="btn btn-outline btn-secondary px-6 text-2xl"><FcGoogle /></button>
                     </div>
                     <h2 className="text-xl mx-5 mb-2">Don't Have An Acoount <Link className="text-green-500" to='/register'>Register</Link></h2>
                 </div>

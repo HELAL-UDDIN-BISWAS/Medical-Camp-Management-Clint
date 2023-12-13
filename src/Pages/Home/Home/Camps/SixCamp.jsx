@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { Skeleton } from "keep-react";
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, Card, PlayButton, Progress } from "keep-react";
@@ -8,6 +8,7 @@ import {
 } from "phosphor-react";
 import useAxiosPublic from '../../../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
+import Skeletons from '../../skeleton/Skeleton';
 
 const SixCamp = () => {
   const axiosPublic = useAxiosPublic()
@@ -19,7 +20,16 @@ const SixCamp = () => {
     }
   })
   if (isLoading == true) {
-    return <div className='text-center'><span className="loading loading-spinner loading-lg"></span></div>
+    return <div className='grid md:grid-cols-3 gap-3'>
+       <Skeletons></Skeletons>
+       <Skeletons></Skeletons>
+       <Skeletons></Skeletons>
+       <Skeletons></Skeletons>
+       <Skeletons></Skeletons>
+       <Skeletons></Skeletons>
+    </div>
+    
+    
   }
 
   const formatDateTime = dateTimeString => {
